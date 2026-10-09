@@ -1,0 +1,110 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: django_image:v0
+    container_name: django_app
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "8080:8080"
+
+    volumes:
+      - .:/app
+
+    command: >
+      python manage.py runserver 0.0.0.0:8080
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+    environment:
+      DATABASE_URL: postgresql://sygrh_user:postgres@postgres:5432/sygrh_db
+      REDIS_URL: redis://redis:6379/0
+
+    networks:
+      - django_network
+
+
+  postgres:
+    image: postgres:16
+    container_name: django_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: sygrh_db
+      POSTGRES_USER: sygrh_user
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U formateur2_user -d formation2_db"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - django_network
+
+
+  redis:
+    image: redis:7-alpine
+    container_name: django_redis
+    restart: unless-stopped
+
+    ports:
+      - "6379:6379"
+
+    volumes:
+      - redis_data:/data
+
+    networks:
+      - django_network
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: django_pgadmin
+    restart: unless-stopped
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@example.com
+      PGADMIN_DEFAULT_PASSWORD: root
+
+    ports:
+      - "5050:80"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - django_network
+
+
+volumes:
+  postgres_data:
+  redis_data:
+
+
+networks:
+  django_network:
+    driver: bridge

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SYGRH{% endblock %}</title>
+    {% load static %}
+    <style>
+        :root {
+            --color-red: #c0392b;
+            --color-orange: #FCA404;
+            --color-orange-light: #f2bd5c;
+            --color-blue: #3498db;
+            --color-black-opacity: #0007; 
+            --color-black:#0A1931;
+            --primary: #1f4e79;
+            --background: #f4f7fa;
+            --text: #1f2937;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            background: var(--background);
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+        }
+        body .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+            max-width: 90rem;
+            margin: 0 auto;
+            padding: 0!important;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            padding: 0rem 0rem;
+            color: var(--white);
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin:0px!important
+        }
+
+        .top-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            gap: 3rem;
+            padding: 0.5rem 2rem;
+            background-color: var(--white);
+        }
+
+        .top-header-content img {
+            max-height: 5rem;
+            width: auto;
+        }
+
+        .header-content_ {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 1rem 2rem;
+            background-color: var(--color-orange);
+        }
+    
+        .brand {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .header-content_ nav {
+            display: flex!important;
+            flex-direction: row!important;
+            gap: 1.5rem;
+        }
+
+        .header-content_ nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .header-content_ nav a:hover,
+        .header-content_ nav a:focus-visible {
+            text-decoration: none;
+        }
+
+        .nav-item_{
+            position: relative;
+        }
+
+        .dropdown-menu-invisible {
+            position: absolute;
+            top: (100% + 0.1rem);
+            left: 0;
+            display: none;
+            min-width: 12rem;
+            padding: 0.5rem 0rem;
+            border-radius: 0.5rem;
+            background-color: var(--transparent);
+            z-index: 1000;
+        }
+        .dropdown-menu_ {
+            margin-top: 0.6rem;
+            position:relative;
+            min-width: 12rem;
+            padding: 0rem;
+            border-radius: 0.5rem;
+            background-color: var(--white);
+            box-shadow: 0 10px 30px var(--color-black-opacity);
+        }
+        .dropdown-menu_ a {
+            display: block;
+            padding: 0.65rem 0.75rem;
+            border-radius: 0.35rem;
+            color: var(--color-black)!important;
+        }
+
+        .dropdown-menu-invisible a:hover,
+        .dropdown-menu-invisible a:focus-visible {
+            text-decoration: none;
+            background-color: var(--color-orange-light);
+            color: var(--white)!important;
+        }
+
+        .nav-item_:hover .dropdown-menu-invisible,
+        .nav-item_:focus-within .dropdown-menu-invisible {
+            display: block;
+        }
+
+        main {
+            width: 100%;
+            margin: 0rem;
+            padding: 0rem;
+            flex: 1;
+            background-color: var(--background);
+        }
+
+        footer {
+            padding: 2rem;
+            color: var(--white);
+            background: #17324d;
+            text-align: center;
+            margin:0px!important;
+        }
+
+        .footer-content {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .footer-content .footer-droit-reserve {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+        .footer-content p {
+            margin: 0;
+        }
+        .footer-content .footer-titre-section {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+        }
+        .footer-content .footer-links {
+            text-align: left;
+        }
+        .footer-content .footer-links a {
+            display: inline-block;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .image-logodrh{
+            max-height: 6rem;
+            width: auto;
+        }
+        @media (max-width: 700px) {
+            .header-content_ {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .header-content_ nav {
+                flex-wrap: wrap;
+                gap: 0.75rem 1rem;
+            }
+        }
+       
+    </style>
+    <!-- Bootstrap CSS -->
+     <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{% static 'plugins/ionicons/css/ionicons.min.css' %}">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+    <!-- Theme style --> 
+    <link rel="stylesheet" href="{% static 'plugins/adminlte/css/adminlte.min.css' %}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'css/css_pro/adminlte.min.css' %}">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="top-header-content">
+                <a href="{% url 'accueil' %}" class="flex items-center">
+                    <img
+                    src="{% static 'images/logodrh.png' %}"
+                    alt="DRH — Direction des Ressources Humaines"
+                    class="h-20 w-auto object-contain"
+                    />
+                </a>
+                <img
+                    src="{% static 'images/logomesrs.png' %}"
+                    alt="MESRS — Ministère de l'Enseignement Supérieur et de la Recherche Scientifique"
+                    class="h-20 w-auto object-contain" 
+                />
+            </div>
+            <div class="header-content_">
+                <nav aria-label="Navigation principale">
+                    <a href="{% url 'accueil' %}"> <i class="fas fa-home mr-2"></i><span>Accueil</span></a>
+                    <div class="nav-item_">
+                        <a href="#"><i class="fas fa-university mr-2"></i> <span>DRH-MESRS</span> <i class="fas fa-angle-down mr-2"></i> </a>
+                        <div class="dropdown-menu-invisible">
+                            <div class="dropdown-menu_">
+                                <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Missions</a>
+                                <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Objectifs</a>
+                                <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Présentation</a>
+                                <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Mot du Directeur</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <a href="#"> <i class="nav-icon fas fa-th mr-2"></i> <span></span>Nos services</span></a>
+                    <a href="#"> <i class="fas fa-users mr-2"></i> <span>Recrutement</span></a>
+                    <a href="#"> <i class="nav-icon fas fa-database mr-2"></i> <span>SYGRH</span></a>
+                    <a href="#"> <i class="nav-icon far fa-calendar-alt mr-2"></i> Contacts</a>
+                </nav>
+            </div>
+        </header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <div class="footer-content">
+                <div class="row">
+                    <div class="col-sm-4"> 
+                        <img src="{% static 'images/logodrh.png' %}" alt="DRH — Direction des Ressources Humaines" class="image-logodrh object-contain" />
+                        <p>Direction des Ressources Humaines</p>
+                    </div>
+                    <div class="col-sm-4"> 
+                        <p class="footer-titre-section">Liens utiles</p>
+                        <div class="footer-links">  
+                            <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Accueil</a><br>
+                            <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> DRH-MESRS</a><br>
+                            <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Nos services</a><br>
+                            <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> Recrutement</a><br>
+                            <a href="#"> <ion-icon name="caret-forward-outline" size="small"></ion-icon> SYGRH</a><br>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="footer-titre-section">Suivez-nous</p>
+                        <div class="footer-links">
+                            <a href="#" target="_blank"><ion-icon name="logo-facebook"></ion-icon> Facebook</a><br>
+                            <a href="#" target="_blank"><ion-icon name="logo-linkedin"></ion-icon> LinkedIn</a><br>
+                        </div>
+                    </div>
+                </div>
+                <p class=" footer-droit-reserve ">© {% now "Y" %} SYGRH. Tous droits réservés.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- ChartJS -->
+    <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+    <!-- Sparkline --> 
+    <script src="{% static 'plugins/sparklines/sparkline.js' %}"></script>
+    <!-- JQVMap -->
+    <script src="{% static 'plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+    <script src="{% static 'plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="{% static 'plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+    <!-- daterangepicker -->
+    <script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+    <script src="{% static 'plugins/daterangepicker/daterangepicker.js' %}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <!-- Summernote -->
+    <script src="{% static 'plugins/summernote/summernote-bs4.min.js' %}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+
+    <script src="{% static 'js/adminlte.js' %}"></script>
+    <script src="{% static 'js/demo.js' %}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
